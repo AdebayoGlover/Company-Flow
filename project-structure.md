@@ -1,4 +1,3 @@
-
 Company Flow - project structure
 
 
@@ -86,6 +85,7 @@ company-flow/
 │   │   ├── config/                # Configuration files
 │   │   │   ├── database.js        # Database configuration
 │   │   │   ├── auth.js            # Authentication configuration
+│   │   │   ├── mongodb.js         # MongoDB configuration
 │   │   │   └── environment.js     # Environment variables
 │   │   │
 │   │   ├── api/                   # API routes and controllers

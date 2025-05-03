@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "migrate": "node ../database/scripts/migrate.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.0",
+    "dotenv": "^16.3.1"
+  }
+}

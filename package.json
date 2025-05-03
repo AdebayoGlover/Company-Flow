@@ -1,0 +1,18 @@
+{
+  "name": "company-flow",
+  "version": "1.0.0",
+  "description": "A web app for internal business operations. Written in vanilla JavaScript",
+  "main": "app.js",
+  "scripts": {
+    "test": "JavaScript"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/AdebayoGlover/Company-Flow"
+  },
+  "keywords": [
+    "JavaScript"
+  ],
+  "author": "Adebayo Glover",
+  "license": "ISC"
+}
