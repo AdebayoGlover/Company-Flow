@@ -22,22 +22,25 @@ const router = {
   },
 
   init() {
-    // Initialize router on page load
     window.addEventListener('DOMContentLoaded', () => {
-      // Get current path
+      // Handle initial route
       const currentPath = window.location.pathname;
+      const publicRoutes = ['/login', '/register'];
 
-      // If at root or not authenticated, go to login
-      if (currentPath === '/' || !auth.isAuthenticated()) {
+      if (!auth.isAuthenticated() && !publicRoutes.includes(currentPath)) {
         this.navigateTo('/login');
+      } else if (
+        auth.isAuthenticated() &&
+        (currentPath === '/' || currentPath === '/login')
+      ) {
+        // Redirect authenticated users to their dashboard
+        const department = auth.getUserDepartment();
+        this.navigateTo(`/dashboard/${department}`);
       } else {
         this.handleRoute();
       }
 
-      // Handle browser back/forward buttons
-      window.addEventListener('popstate', () => this.handleRoute());
-
-      // Handle navigation links
+      // Handle navigation events
       document.addEventListener('click', (e) => {
         if (e.target.matches('[data-route]')) {
           e.preventDefault();
@@ -45,17 +48,21 @@ const router = {
           this.navigateTo(route);
         }
       });
+
+      // Handle browser back/forward
+      window.addEventListener('popstate', () => this.handleRoute());
     });
   },
 
   async handleRoute() {
     const path = window.location.pathname;
+    const publicRoutes = ['/login', '/register'];
 
     try {
       loading.show();
 
-      // Handle root path
-      if (path === '/') {
+      // Auth check for protected routes
+      if (!publicRoutes.includes(path) && !auth.isAuthenticated()) {
         this.navigateTo('/login');
         return;
       }
@@ -66,27 +73,23 @@ const router = {
         throw new Error('Route not found');
       }
 
-      console.log('Loading module:', routePath); // Debug log
-
       // Load and render page
       const module = await import(`./pages/${routePath}.js`);
       const mainContent = document.getElementById('app');
-
-      // Clear existing content
       mainContent.innerHTML = '';
-
-      // Render new content
       const content = module.default();
       mainContent.innerHTML = content;
-
-      console.log('Page rendered:', path); // Debug log
     } catch (error) {
       console.error('Route handling error:', error);
       const mainContent = document.getElementById('app');
       mainContent.innerHTML = `
         <div class="error-page">
           <h2>Page Not Found</h2>
-          <p>Please try logging in again.</p>
+          <p>${
+            !auth.isAuthenticated()
+              ? 'Please log in to continue.'
+              : 'The page you requested was not found.'
+          }</p>
           <a href="/login" data-route="/login">Go to Login</a>
         </div>
       `;
@@ -96,7 +99,6 @@ const router = {
   },
 
   navigateTo(route) {
-    console.log('Navigating to:', route); // Debug log
     window.history.pushState({}, '', route);
     this.handleRoute();
   },

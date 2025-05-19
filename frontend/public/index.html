@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Flow</title>
-    <link rel="stylesheet" href="assets/styles/main.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+    <link rel="stylesheet" href="assets/styles/main.css">
   </head>
   <body>
     <header>
-      <h1>Company Flow</h1>
+      <div class="header-content">
+        <h1>Company Flow</h1>
+      </div>
+      <div class="greeting-card">
+        <p id="greet"></p>
+        <p>Today is <span id="get-day"></span> <span id="get-date"></span></p>
+      </div>
     </header>
     <main id="app">
       <div class="loading-container">
@@ -17,6 +25,12 @@
       </div>
     </main>
     <div id="error-container"></div>
-    <script type="module" src="../src/index.js"></script>
+    <footer>
+      <div class="footer-content">
+        <p>Company Flow &copy; <span id="currentYear"></span></p>
+        <p>All rights reserved.</p>
+      </div>
+    </footer>
+    <script type="module" src="../public/index.js"></script>
   </body>
 </html>
