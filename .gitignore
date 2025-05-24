@@ -40,3 +40,4 @@ coverage/
 # Operating System
 Thumbs.db
 Desktop.ini
+.vercel
